@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  base: '/creative-portfolio/',
   build: {
     target: 'es2015',
     rollupOptions: {

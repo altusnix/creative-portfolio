@@ -33,10 +33,10 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Fix module loading for GitHub Pages
+      - name: Fix paths for GitHub Pages
         run: |
-          sed -i 's|<script type="module" crossorigin src="/portfolio.js"></script>|<script src="/portfolio.js"></script>|g' dist/index.html
-          sed -i 's|<link rel="stylesheet" crossorigin href="/style.css">|<link rel="stylesheet" href="/style.css">|g' dist/index.html
+          sed -i 's|<script type="module" crossorigin src="/creative-portfolio/portfolio.js"></script>|<script src="./portfolio.js"></script>|g' dist/index.html
+          sed -i 's|<link rel="stylesheet" crossorigin href="/creative-portfolio/style.css">|<link rel="stylesheet" href="./style.css">|g' dist/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
