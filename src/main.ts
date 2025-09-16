@@ -1,31 +1,22 @@
 import './style.css'
 import * as THREE from 'three'
 
-class ArtBanner {
+class PixelWaveBackground {
   private scene: THREE.Scene
   private camera: THREE.OrthographicCamera
   private renderer: THREE.WebGLRenderer
-  private materials: THREE.ShaderMaterial[] = []
+  private material!: THREE.ShaderMaterial
   private geometry: THREE.PlaneGeometry
-  private meshes: THREE.Mesh[] = []
-  private currentIndex = 0
-  private transitionProgress = 0
-  private transitionSpeed = 0.01
-  private displayTime = 3000 // 3 seconds per image
-  private lastTransitionTime = 0
-
-  private artImages = [
-    '/src/img/art-portfolio/evolutionseries1.jpeg',
-    '/src/img/art-portfolio/evolutionseries2.jpeg',
-    '/src/img/art-portfolio/evolutionseries3.jpeg',
-    '/src/img/art-portfolio/evolutionseries4.jpeg'
-  ]
+  private mesh!: THREE.Mesh
+  private startTime: number
 
   constructor(canvas: HTMLCanvasElement) {
+    this.startTime = Date.now()
+
     // Setup renderer
     this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true })
     this.renderer.setSize(canvas.clientWidth, canvas.clientHeight)
-    this.renderer.setClearColor(0x000000, 0.1)
+    this.renderer.setClearColor(0x000000, 0.0)
 
     // Setup camera
     const aspect = canvas.clientWidth / canvas.clientHeight
@@ -36,145 +27,108 @@ class ArtBanner {
     this.scene = new THREE.Scene()
     this.geometry = new THREE.PlaneGeometry(2 * aspect, 2)
 
-    this.loadTextures()
+    this.createPixelWaveMaterial()
     this.animate()
 
     // Handle resize
     window.addEventListener('resize', () => this.handleResize(canvas))
   }
 
-  private loadTextures() {
-    const loader = new THREE.TextureLoader()
+  private createPixelWaveMaterial() {
+    this.material = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0.0 },
+        uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        uniform vec2 uResolution;
+        varying vec2 vUv;
 
-    this.artImages.forEach((imagePath, index) => {
-      loader.load(imagePath, (texture) => {
-        texture.wrapS = THREE.ClampToEdgeWrapping
-        texture.wrapT = THREE.ClampToEdgeWrapping
-        texture.minFilter = THREE.LinearFilter
-        texture.magFilter = THREE.LinearFilter
+        // Noise function for organic randomness
+        float random(vec2 st) {
+          return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+        }
 
-        // Calculate proper scaling for portrait images in landscape container
-        const imageAspect = texture.image.height / texture.image.width // Portrait ratio
-        const containerAspect = this.camera.right / this.camera.top // Banner aspect
+        // Create pixelated effect
+        vec2 pixelate(vec2 uv, float pixelSize) {
+          return floor(uv * pixelSize) / pixelSize;
+        }
 
-        // Create material with object-fit: cover behavior
-        const material = new THREE.ShaderMaterial({
-          uniforms: {
-            uTexture: { value: texture },
-            uOpacity: { value: index === 0 ? 1.0 : 0.0 },
-            uTime: { value: 0.0 },
-            uImageAspect: { value: imageAspect },
-            uContainerAspect: { value: containerAspect }
-          },
-          vertexShader: `
-            varying vec2 vUv;
-            void main() {
-              vUv = uv;
-              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-            }
-          `,
-          fragmentShader: `
-            uniform sampler2D uTexture;
-            uniform float uOpacity;
-            uniform float uTime;
-            uniform float uImageAspect;
-            uniform float uContainerAspect;
-            varying vec2 vUv;
+        void main() {
+          vec2 uv = vUv;
 
-            void main() {
-              vec2 uv = vUv;
+          // Create pixelated coordinates
+          float pixelSize = 60.0 + sin(uTime * 0.5) * 20.0;
+          vec2 pixelUv = pixelate(uv, pixelSize);
 
-              // Implement object-fit: cover for portrait images in landscape container
-              float containerRatio = uContainerAspect;
-              float imageRatio = 1.0 / uImageAspect; // Convert to width/height
+          // Create more flowy waves with organic movement
+          float wave1 = sin(pixelUv.x * 6.0 + uTime * 1.2) * 0.6;
+          float wave2 = cos(pixelUv.y * 4.0 + uTime * 0.8) * 0.4;
+          float wave3 = sin((pixelUv.x + pixelUv.y) * 3.0 + uTime * 1.5) * 0.3;
+          float wave4 = cos(pixelUv.x * 2.0 - pixelUv.y * 1.5 + uTime * 0.6) * 0.5;
+          float wave5 = sin(pixelUv.y * 5.0 + cos(pixelUv.x * 3.0) + uTime * 1.0) * 0.4;
 
-              vec2 scale = vec2(1.0);
-              if (containerRatio > imageRatio) {
-                // Container is wider than image, scale by width
-                scale.y = containerRatio / imageRatio;
-              } else {
-                // Container is taller than image, scale by height
-                scale.x = imageRatio / containerRatio;
-              }
+          // Create flowing, organic movement
+          float flowX = sin(pixelUv.y * 2.0 + uTime * 0.7) * 0.3;
+          float flowY = cos(pixelUv.x * 2.5 + uTime * 0.9) * 0.3;
 
-              // Center and scale the UV coordinates
-              uv = (uv - 0.5) * scale + 0.5;
+          // Combine waves with flowing motion
+          float waves = wave1 + wave2 + wave3 + wave4 + wave5 + flowX + flowY;
 
-              // Add slight distortion for artistic effect
-              uv.x += sin(uv.y * 10.0 + uTime * 0.5) * 0.002;
-              uv.y += cos(uv.x * 8.0 + uTime * 0.3) * 0.001;
+          // Create flowing colors that shift more organically
+          vec3 color1 = vec3(0.5 + sin(uTime * 0.7 + pixelUv.x * 2.5) * 0.4, 0.3, 0.8); // Purple-pink
+          vec3 color2 = vec3(0.1, 0.6 + cos(uTime * 0.5 + pixelUv.y * 2.0) * 0.3, 0.9); // Cyan-blue
+          vec3 color3 = vec3(0.9, 0.2 + sin(uTime * 0.8 + waves * 0.5) * 0.3, 0.5); // Pink-red
 
-              // Only render if UV is within bounds
-              if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) {
-                gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
-                return;
-              }
+          // More organic color mixing with flowing patterns
+          float colorMix1 = (sin(waves * 0.8 + uTime * 0.6) + 1.0) * 0.5;
+          float colorMix2 = (cos(pixelUv.x * 3.0 + pixelUv.y * 2.0 + uTime * 0.9) + 1.0) * 0.5;
+          float colorMix3 = (sin(flowX + flowY + uTime * 0.4) + 1.0) * 0.5;
 
-              vec4 color = texture2D(uTexture, uv);
+          // Create more flowing color transitions
+          vec3 mixedColor = mix(color1, color2, colorMix1);
+          vec3 finalColor = mix(mixedColor, color3, colorMix2 * colorMix3);
 
-              // Apply color enhancement
-              color.rgb = mix(color.rgb, color.rgb * 1.2, 0.3);
-              color.rgb = mix(color.rgb, vec3(1.0, 0.3, 0.6), 0.05); // Slight pink tint
+          // Add smaller, subtler sparkle
+          float sparkle = random(pixelUv + floor(uTime * 2.0));
+          if (sparkle > 0.995) {
+            finalColor += vec3(0.2);
+          }
 
-              gl_FragColor = vec4(color.rgb, color.a * uOpacity);
-            }
-          `,
-          transparent: true,
-          blending: THREE.NormalBlending
-        })
+          // Add depth with distance from center
+          float dist = distance(uv, vec2(0.5));
+          finalColor *= (1.0 - dist * 0.3);
 
-        this.materials[index] = material
+          // Ensure vibrant colors
+          finalColor = clamp(finalColor, 0.0, 1.0);
 
-        const mesh = new THREE.Mesh(this.geometry, material)
-        mesh.position.z = -index * 0.001 // Slight depth separation
-        this.meshes[index] = mesh
-        this.scene.add(mesh)
-      })
+          gl_FragColor = vec4(finalColor, 0.8);
+        }
+      `,
+      transparent: true,
+      blending: THREE.AdditiveBlending
     })
+
+    this.mesh = new THREE.Mesh(this.geometry, this.material)
+    this.scene.add(this.mesh)
   }
 
   private animate() {
     requestAnimationFrame(() => this.animate())
 
-    const currentTime = Date.now()
+    const currentTime = (Date.now() - this.startTime) * 0.001
 
     // Update time uniform for shader effects
-    this.materials.forEach(material => {
-      if (material.uniforms?.uTime) {
-        material.uniforms.uTime.value = currentTime * 0.001
-      }
-    })
-
-    // Handle transitions
-    if (currentTime - this.lastTransitionTime > this.displayTime) {
-      this.transitionProgress += this.transitionSpeed
-
-      if (this.transitionProgress >= 1.0) {
-        // Complete transition
-        this.transitionProgress = 0
-        this.lastTransitionTime = currentTime
-
-        // Set current image to fully visible
-        if (this.materials[this.currentIndex]) {
-          this.materials[this.currentIndex].uniforms.uOpacity.value = 0.0
-        }
-
-        this.currentIndex = (this.currentIndex + 1) % this.artImages.length
-
-        if (this.materials[this.currentIndex]) {
-          this.materials[this.currentIndex].uniforms.uOpacity.value = 1.0
-        }
-      } else {
-        // Transition in progress
-        const nextIndex = (this.currentIndex + 1) % this.artImages.length
-
-        if (this.materials[this.currentIndex]) {
-          this.materials[this.currentIndex].uniforms.uOpacity.value = 1.0 - this.transitionProgress
-        }
-        if (this.materials[nextIndex]) {
-          this.materials[nextIndex].uniforms.uOpacity.value = this.transitionProgress
-        }
-      }
+    if (this.material?.uniforms?.uTime) {
+      this.material.uniforms.uTime.value = currentTime
     }
 
     this.renderer.render(this.scene, this.camera)
@@ -197,9 +151,9 @@ class ArtBanner {
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Creative Portfolio Initialized')
 
-  // Initialize art banner
-  const artCanvas = document.getElementById('art-banner') as HTMLCanvasElement
-  if (artCanvas) {
-    new ArtBanner(artCanvas)
+  // Initialize pixelated wave background
+  const heroCanvas = document.getElementById('hero-canvas') as HTMLCanvasElement
+  if (heroCanvas) {
+    new PixelWaveBackground(heroCanvas)
   }
 })

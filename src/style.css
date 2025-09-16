@@ -234,9 +234,20 @@ h3 {
   background: var(--bg-primary);
 }
 
+.hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.6;
+}
+
 .hero-content {
   max-width: 800px;
   z-index: 2;
+  position: relative;
 }
 
 .hero-title {
@@ -410,7 +421,7 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 0.3rem;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(139, 92, 246, 0.2);
   border-radius: 12px;
@@ -539,13 +550,21 @@ h3 {
 }
 
 .tech-tag {
-  background: rgba(139, 92, 246, 0.2);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.2));
   border: 1px solid var(--primary-purple);
   border-radius: 20px;
   padding: 0.25rem 0.75rem;
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--primary-purple);
+  color: var(--primary-cyan);
+  transition: all 0.3s ease;
+}
+
+.tech-tag:hover {
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-cyan));
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
 }
 
 .network-visualization {
@@ -774,6 +793,7 @@ button:focus-visible {
 
 .about-visual {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
