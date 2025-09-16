@@ -8,11 +8,11 @@ export default defineConfig({
       output: {
         format: 'umd',
         name: 'Portfolio',
-        entryFileNames: './portfolio.js',
-        chunkFileNames: './[name].js',
+        entryFileNames: 'portfolio.js',
+        chunkFileNames: '[name].js',
         assetFileNames: (assetInfo) => {
           if (assetInfo.name && assetInfo.name.endsWith('.css')) {
-            return './style.css'
+            return 'style.css'
           }
           return '[name].[ext]'
         }
