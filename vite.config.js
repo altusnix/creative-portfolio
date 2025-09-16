@@ -2,13 +2,23 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   build: {
+    target: 'es2015',
     rollupOptions: {
       output: {
-        format: 'iife', // Use IIFE instead of ES modules
-        entryFileNames: 'assets/[name].js',
-        chunkFileNames: 'assets/[name].js',
-        assetFileNames: 'assets/[name].[ext]'
+        format: 'umd',
+        name: 'Portfolio',
+        entryFileNames: 'portfolio.js',
+        chunkFileNames: '[name].js',
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'style.css'
+          }
+          return '[name].[ext]'
+        }
       }
-    }
+    },
+    modulePreload: false,
+    polyfillModulePreload: false,
+    cssCodeSplit: false
   }
 })
