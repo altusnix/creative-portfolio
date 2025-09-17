@@ -320,6 +320,14 @@ h3 {
   padding: 2rem 0;
 }
 
+/* Desktop only: reduce bottom spacing */
+@media (min-width: 769px) {
+  .hero-stats {
+    padding: 2rem 0 0.5rem 0;
+    margin-bottom: 1.5rem;
+  }
+}
+
 .hero-stats .stat {
   text-align: center;
   padding: 1rem 1.5rem;
