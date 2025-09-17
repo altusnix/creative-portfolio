@@ -32,13 +32,15 @@
 }
 
 .cyber-label {
-  display: block;
-  color: #06b6d4;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 :root {
@@ -520,6 +522,7 @@ h3 {
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  margin-top: 3rem;
 }
 
 .project-card {
@@ -623,6 +626,14 @@ h3 {
   color: white;
   transform: scale(1.05);
   box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+}
+
+.interest-tag {
+  padding-right: 0.5rem;
+}
+
+.interest-tag:not(:first-child) {
+  padding-left: 1rem;
 }
 
 .network-visualization {
@@ -989,6 +1000,33 @@ textarea:focus {
   border: 1px solid var(--accent-pink);
   border-radius: 15px;
   color: var(--accent-pink);
+}
+
+/* Art portfolio glow hover effects */
+.art-eight-grid .art-image-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.art-eight-grid .art-image-item img {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.art-eight-grid .art-image-item:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 0 20px rgba(236, 72, 153, 0.6),
+    0 0 40px rgba(139, 92, 246, 0.4),
+    0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.art-eight-grid .art-image-item:hover img {
+  transform: scale(1.05);
+  filter: brightness(1.1) saturate(1.2);
 }
 
 .exhibition-info {
