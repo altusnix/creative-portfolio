@@ -1,5 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
+/* Prevent horizontal scroll on mobile */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+#app {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
 /* Accessibility styles */
 .skip-link {
   position: absolute;
@@ -1477,6 +1490,71 @@ textarea:focus {
 }
 
 @media (max-width: 768px) {
+  .floating-logo {
+    display: none;
+  }
+
+  .hero-section {
+    padding: 2rem 0;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    padding: 0 1.5rem;
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    word-wrap: break-word;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .cta-button {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.875rem 1.5rem;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .section-content {
+    padding: 0 1.5rem;
+    max-width: 100%;
+  }
+
+  .interests-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .interest-tag {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-align: center;
+  }
+
+  .interest-tag:not(:first-child) {
+    padding-left: 1rem;
+  }
+
   .about-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
