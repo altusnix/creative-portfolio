@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="cyberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Hexagon background -->
+  <path d="M32 4 L54 16 L54 40 L32 52 L10 40 L10 16 Z"
+        fill="url(#cyberGrad)"
+        stroke="#ec4899"
+        stroke-width="2"/>
+
+  <!-- Stylized "RS" initials -->
+  <text x="32" y="42"
+        font-family="Orbitron, monospace"
+        font-size="24"
+        font-weight="bold"
+        fill="#ffffff"
+        text-anchor="middle">RS</text>
+
+  <!-- Accent glow effect -->
+  <path d="M32 4 L54 16 L54 40 L32 52 L10 40 L10 16 Z"
+        fill="none"
+        stroke="#ec4899"
+        stroke-width="1"
+        opacity="0.5"/>
+</svg>
