@@ -1214,6 +1214,7 @@ textarea:focus {
   width: 60px;
   height: 60px;
   flex-shrink: 0;
+  z-index: 1;
 }
 
 .thumbnail-wrapper::after {
@@ -1229,8 +1230,9 @@ textarea:focus {
   background-position: center;
   opacity: 0.85;
   pointer-events: none;
-  z-index: 10;
+  z-index: 3;
   filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.8));
+  display: none;
 }
 
 .exhibition-item:hover {
@@ -1248,6 +1250,8 @@ textarea:focus {
   flex-shrink: 0;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .exhibition-thumbnail:hover {
@@ -1562,6 +1566,24 @@ textarea:focus {
   justify-content: center;
 }
 
+.lightbox-content::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  background-image: url('/bird-meow.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 10001;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
+}
+
 .lightbox-image {
   max-width: 100%;
   max-height: 90vh;
@@ -1569,6 +1591,8 @@ textarea:focus {
   border-radius: 8px;
   box-shadow: 0 0 50px rgba(139, 92, 246, 0.5);
   border: 2px solid rgba(139, 92, 246, 0.3);
+  position: relative;
+  z-index: 10000;
 }
 
 .lightbox-close {
@@ -1603,6 +1627,7 @@ textarea:focus {
   justify-content: space-between;
   padding: 0 2rem;
   pointer-events: none;
+  z-index: 10002;
 }
 
 .lightbox-prev,
@@ -1620,6 +1645,7 @@ textarea:focus {
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   pointer-events: all;
+  z-index: 10002;
 }
 
 .lightbox-prev:hover,
