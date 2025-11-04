@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Creative Portfolio - Unlocking Digital Frontiers</title>
 
     <!-- Google tag (gtag.js) -->
@@ -20,10 +21,17 @@
     <div id="app">
       <header class="navbar">
         <div class="nav-brand">Robyn S</div>
-        <nav class="nav-links">
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav class="nav-links" id="nav-links">
           <a href="#hero">Home</a>
           <a href="#about">About</a>
           <a href="#projects">Tech Projects</a>
+          <a href="#skills">Experience</a>
+          <a href="#clients">Clients</a>
           <a href="#art">Visual Art</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -319,70 +327,42 @@
         <section id="skills" class="skills-section">
           <div class="section-content">
             <h2>Tech Arsenal</h2>
-            <p>Advanced technologies and frameworks mastered through countless digital battles.</p>
+            <p>Core technologies and tools powering modern digital experiences.</p>
             <div class="skills-grid">
               <div class="skill-category">
-                <h3>Frontend</h3>
-                <div class="skill-items">
-                  <span class="skill-tag">React</span>
-                  <span class="skill-tag">Angular</span>
-                  <span class="skill-tag">TypeScript</span>
-                  <span class="skill-tag">JavaScript</span>
-                  <span class="skill-tag">HTML</span>
-                  <span class="skill-tag">CSS</span>
-                  <span class="skill-tag">SCSS</span>
-                  <span class="skill-tag">Bootstrap</span>
-                  <span class="skill-tag">jQuery</span>
-                  <span class="skill-tag">Thymeleaf</span>
-                </div>
+                <h3>Development</h3>
+                <ul class="skill-list">
+                  <li>HTML5, CSS, JavaScript</li>
+                  <li>Adobe AEM</li>
+                  <li>Node.js & Vite</li>
+                  <li>Tailwind CSS</li>
+                  <li>Git & CI/CD</li>
+                  <li>AWS Cloud</li>
+                  <li>REST APIs</li>
+                </ul>
               </div>
               <div class="skill-category">
-                <h3>Misc & CMS</h3>
-                <div class="skill-items">
-                  <span class="skill-tag">PHP</span>
-                  <span class="skill-tag">WordPress</span>
-                  <span class="skill-tag">AEM</span>
-                  <span class="skill-tag">Marzipano</span>
-                  <span class="skill-tag">Monetate</span>
-                  <span class="skill-tag">Adobe Target</span>
-                  <span class="skill-tag">Adobe Launch</span>
-                  <span class="skill-tag">Ace Components</span>
-                  <span class="skill-tag">E-Commerce</span>
-                </div>
+                <h3>Design & UX</h3>
+                <ul class="skill-list">
+                  <li>Figma</li>
+                  <li>Adobe Creative Suite & Photoshop</li>
+                  <li>UX/UI Design</li>
+                  <li>Graphic Design</li>
+                  <li>Professional Photography</li>
+                  <li>Accessibility (WCAG 2.1)</li>
+                  <li>Responsive Design</li>
+                </ul>
               </div>
               <div class="skill-category">
-                <h3>Development Tools</h3>
-                <div class="skill-items">
-                  <span class="skill-tag">AWS</span>
-                  <span class="skill-tag">Git</span>
-                  <span class="skill-tag">Jenkins</span>
-                  <span class="skill-tag">Mobile First Design</span>
-                  <span class="skill-tag">VS Code</span>
-                  <span class="skill-tag">Claude Code</span>
-                  <span class="skill-tag">Copilot</span>
-                  <span class="skill-tag">Claude</span>
-                  <span class="skill-tag">ChatGPT</span>
-                  <span class="skill-tag">IntelliJ</span>
-                  <span class="skill-tag">PHPStorm</span>
-                  <span class="skill-tag">Atlassian</span>
-                  <span class="skill-tag">Microsoft Suite</span>
-                  <span class="skill-tag">Eclipse</span>
-                </div>
-              </div>
-              <div class="skill-category">
-                <h3>Design & Creative</h3>
-                <div class="skill-items">
-                  <span class="skill-tag">Adobe Suite</span>
-                  <span class="skill-tag">Figma</span>
-                  <span class="skill-tag">UX</span>
-                  <span class="skill-tag">Accessibility</span>
-                  <span class="skill-tag">Deque</span>
-                  <span class="skill-tag">Graphic Design</span>
-                  <span class="skill-tag">Photography</span>
-                  <span class="skill-tag">Professional Photo Editing</span>
-                  <span class="skill-tag">Mixed Media Art</span>
-                  <span class="skill-tag">Digital Painting</span>
-                </div>
+                <h3>Tools & Platforms</h3>
+                <ul class="skill-list">
+                  <li>VS Code & other IDEs</li>
+                  <li>AI Tools (Claude, Copilot, ChatGPT, and more...)</li>
+                  <li>Jenkins, GitLab, GitHub, Bitbucket, Netlify, and more...</li>
+                  <li>Atlassian Suite (Jira, Confluence)</li>
+                  <li>Adobe Experience Cloud</li>
+                  <li>WordPress & other misc CMS</li>
+                </ul>
               </div>
             </div>
           </div>
@@ -484,33 +464,6 @@
             <h2>Visual Art Portfolio</h2>
             <p>My work has been recognized by galleries nationally and internationally, with exhibitions spanning multiple continents with various publications featuring my artistic practice. Beyond the accolades, art remains my driving passion—a vital creative outlet that continually informs and enriches my approach to visual problem-solving across all disciplines.</p>
 
-            <div class="art-eight-grid" style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 1rem;">
-              <div class="art-image-item">
-                <img src="/art-portfolio/1.jpeg" alt="Evolution Series 1" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px;">
-              </div>
-              <div class="art-image-item">
-                <img src="/art-portfolio/2.jpeg" alt="Evolution Series 2" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px;">
-              </div>
-              <div class="art-image-item">
-                <img src="/art-portfolio/3.jpeg" alt="Evolution Series 3" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px;">
-              </div>
-              <div class="art-image-item">
-                <img src="/art-portfolio/4.jpeg" alt="Evolution Series 4" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px;">
-              </div>
-              <div class="art-image-item">
-                <img src="/art-portfolio/5.jpeg" alt="Evolution Series 5" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px;">
-              </div>
-              <div class="art-image-item">
-                <img src="/art-portfolio/7.jpeg" alt="Evolution Series 7" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px;">
-              </div>
-              <div class="art-image-item">
-                <img src="/art-portfolio/8.jpeg" alt="Evolution Series 8" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px;">
-              </div>
-              <div class="art-image-item">
-                <img src="/art-portfolio/9.jpeg" alt="Evolution Series 9" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px;">
-              </div>
-            </div>
-
             <div class="exhibition-info">
               <h3>Exhibition History</h3>
               <div class="exhibition-timeline">
@@ -518,40 +471,85 @@
                   <h4>2025</h4>
                   <div class="exhibition-list">
                     <div class="exhibition-item">
-                      <h5>"Duality"</h5>
-                      <p>Art.Fait at The Indra Gallery, London - October 2025</p>
+                      <div class="thumbnail-wrapper">
+                        <img src="/art-portfolio/1.jpeg" alt="Duality" class="exhibition-thumbnail">
+                      </div>
+                      <div class="exhibition-text">
+                        <h5>"Duality"</h5>
+                        <p>Art.Fait at The Indra Gallery, London - October 2025</p>
+                      </div>
                     </div>
                     <div class="exhibition-item">
-                      <h5>"The Incredible Lightness of Art II"</h5>
-                      <p>Philadelphia/TriState Artists Equity - September 2025</p>
+                      <div class="thumbnail-wrapper">
+                        <img src="/art-portfolio/2.jpeg" alt="The Incredible Lightness of Art II" class="exhibition-thumbnail">
+                      </div>
+                      <div class="exhibition-text">
+                        <h5>"The Incredible Lightness of Art II"</h5>
+                        <p>Philadelphia/TriState Artists Equity - September 2025</p>
+                      </div>
                     </div>
                     <div class="exhibition-item">
-                      <h5>"Process & Material"</h5>
-                      <p>The Crooked Tree, Petoskey Michigan - September 2025</p>
+                      <div class="thumbnail-wrapper">
+                        <img src="/art-portfolio/3.jpeg" alt="Process & Material" class="exhibition-thumbnail">
+                      </div>
+                      <div class="exhibition-text">
+                        <h5>"Process & Material"</h5>
+                        <p>The Crooked Tree, Petoskey Michigan - September 2025</p>
+                      </div>
                     </div>
                     <div class="exhibition-item">
-                      <h5>"2025 Thumb Area Artists Exhibition"</h5>
-                      <p>Starkweather Arts Center, Romeo Michigan - September 2025</p>
+                      <div class="thumbnail-wrapper">
+                        <img src="/art-portfolio/4.jpeg" alt="2025 Thumb Area Artists Exhibition" class="exhibition-thumbnail">
+                      </div>
+                      <div class="exhibition-text">
+                        <h5>"2025 Thumb Area Artists Exhibition"</h5>
+                        <p>Starkweather Arts Center, Romeo Michigan - September 2025</p>
+                      </div>
                     </div>
                     <div class="exhibition-item">
-                      <h5>"It's Me"</h5>
-                      <p>Grosse Pointe Artists Association, Michigan - October 2025</p>
+                      <div class="thumbnail-wrapper">
+                        <img src="/art-portfolio/5.jpeg" alt="It's Me" class="exhibition-thumbnail">
+                      </div>
+                      <div class="exhibition-text">
+                        <h5>"It's Me"</h5>
+                        <p>Grosse Pointe Artists Association, Michigan - October 2025</p>
+                      </div>
                     </div>
                     <div class="exhibition-item">
-                      <h5>"Mindblowing"</h5>
-                      <p>Grosse Pointe Artists Association, Michigan - August 2025</p>
+                      <div class="thumbnail-wrapper">
+                        <img src="/art-portfolio/7.jpeg" alt="Mindblowing" class="exhibition-thumbnail">
+                      </div>
+                      <div class="exhibition-text">
+                        <h5>"Mindblowing"</h5>
+                        <p>Grosse Pointe Artists Association, Michigan - August 2025</p>
+                      </div>
                     </div>
                     <div class="exhibition-item">
-                      <h5>Pancakes & Booze Popup Art Show</h5>
-                      <p>Tangent Gallery - August 2025</p>
+                      <div class="thumbnail-wrapper">
+                        <img src="/art-portfolio/8.jpeg" alt="Pancakes & Booze" class="exhibition-thumbnail">
+                      </div>
+                      <div class="exhibition-text">
+                        <h5>Pancakes & Booze Popup Art Show</h5>
+                        <p>Tangent Gallery - August 2025</p>
+                      </div>
                     </div>
                     <div class="exhibition-item">
-                      <h5>"The Dark Side 2025"</h5>
-                      <p>Boomer Gallery - July 2025</p>
+                      <div class="thumbnail-wrapper">
+                        <img src="/art-portfolio/9.jpeg" alt="The Dark Side 2025" class="exhibition-thumbnail">
+                      </div>
+                      <div class="exhibition-text">
+                        <h5>"The Dark Side 2025"</h5>
+                        <p>Boomer Gallery - July 2025</p>
+                      </div>
                     </div>
                     <div class="exhibition-item">
-                      <h5>"FUNGI" Art Show</h5>
-                      <p>BWAC - June 2025</p>
+                      <div class="thumbnail-wrapper">
+                        <img src="/art-portfolio/1.jpeg" alt="FUNGI Art Show" class="exhibition-thumbnail">
+                      </div>
+                      <div class="exhibition-text">
+                        <h5>"FUNGI" Art Show</h5>
+                        <p>BWAC - June 2025</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -559,8 +557,13 @@
                   <h4>2020</h4>
                   <div class="exhibition-list">
                     <div class="exhibition-item">
-                      <h5>Nasty Women Gallery Show</h5>
-                      <p>2020</p>
+                      <div class="thumbnail-wrapper">
+                        <img src="/art-portfolio/2.jpeg" alt="Nasty Women Gallery Show" class="exhibition-thumbnail">
+                      </div>
+                      <div class="exhibition-text">
+                        <h5>Nasty Women Gallery Show</h5>
+                        <p>2020</p>
+                      </div>
                     </div>
                   </div>
                 </div>

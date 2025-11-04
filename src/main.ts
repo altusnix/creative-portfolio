@@ -314,27 +314,29 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
-  // Lightbox functionality
+  // Lightbox functionality for exhibition thumbnails
   const lightbox = document.getElementById('lightbox') as HTMLDivElement
   const lightboxImage = lightbox?.querySelector('.lightbox-image') as HTMLImageElement
   const lightboxClose = lightbox?.querySelector('.lightbox-close') as HTMLButtonElement
   const lightboxOverlay = lightbox?.querySelector('.lightbox-overlay') as HTMLDivElement
   const lightboxPrev = lightbox?.querySelector('.lightbox-prev') as HTMLButtonElement
   const lightboxNext = lightbox?.querySelector('.lightbox-next') as HTMLButtonElement
-  const artImages = document.querySelectorAll('.art-image-item img') as NodeListOf<HTMLImageElement>
+  const exhibitionThumbnails = document.querySelectorAll('.exhibition-thumbnail') as NodeListOf<HTMLImageElement>
 
   let currentImageIndex = 0
 
-  if (lightbox && artImages.length > 0) {
-    // Open lightbox when clicking on art images
-    artImages.forEach((img, index) => {
-      img.parentElement?.addEventListener('click', () => {
+  if (lightbox && exhibitionThumbnails.length > 0) {
+    // Open lightbox when clicking on exhibition thumbnails
+    exhibitionThumbnails.forEach((img, index) => {
+      img.addEventListener('click', () => {
         currentImageIndex = index
         showImage(currentImageIndex)
         lightbox.classList.add('active')
         lightbox.setAttribute('aria-hidden', 'false')
         document.body.style.overflow = 'hidden'
       })
+      // Make thumbnails look clickable
+      img.style.cursor = 'pointer'
     })
 
     // Close lightbox
@@ -349,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Navigate images
     const showImage = (index: number) => {
-      const img = artImages[index]
+      const img = exhibitionThumbnails[index]
       if (img && lightboxImage) {
         lightboxImage.src = img.src
         lightboxImage.alt = img.alt
@@ -357,12 +359,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     lightboxPrev?.addEventListener('click', () => {
-      currentImageIndex = (currentImageIndex - 1 + artImages.length) % artImages.length
+      currentImageIndex = (currentImageIndex - 1 + exhibitionThumbnails.length) % exhibitionThumbnails.length
       showImage(currentImageIndex)
     })
 
     lightboxNext?.addEventListener('click', () => {
-      currentImageIndex = (currentImageIndex + 1) % artImages.length
+      currentImageIndex = (currentImageIndex + 1) % exhibitionThumbnails.length
       showImage(currentImageIndex)
     })
 
@@ -373,11 +375,40 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Escape') {
         closeLightbox()
       } else if (e.key === 'ArrowLeft') {
-        currentImageIndex = (currentImageIndex - 1 + artImages.length) % artImages.length
+        currentImageIndex = (currentImageIndex - 1 + exhibitionThumbnails.length) % exhibitionThumbnails.length
         showImage(currentImageIndex)
       } else if (e.key === 'ArrowRight') {
-        currentImageIndex = (currentImageIndex + 1) % artImages.length
+        currentImageIndex = (currentImageIndex + 1) % exhibitionThumbnails.length
         showImage(currentImageIndex)
+      }
+    })
+  }
+
+  // Mobile menu toggle
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle') as HTMLButtonElement
+  const navLinks = document.getElementById('nav-links') as HTMLElement
+
+  if (mobileMenuToggle && navLinks) {
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileMenuToggle.classList.toggle('active')
+      navLinks.classList.toggle('active')
+    })
+
+    // Close menu when clicking on a link
+    const navLinksItems = navLinks.querySelectorAll('a')
+    navLinksItems.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenuToggle.classList.remove('active')
+        navLinks.classList.remove('active')
+      })
+    })
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement
+      if (!navLinks.contains(target) && !mobileMenuToggle.contains(target)) {
+        mobileMenuToggle.classList.remove('active')
+        navLinks.classList.remove('active')
       }
     })
   }
